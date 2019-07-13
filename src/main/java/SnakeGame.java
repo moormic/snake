@@ -4,7 +4,7 @@
 
 public class SnakeGame {
     public String getGreeting() {
-        return "Snake Application!";
+        return "Hello from Snake Game!";
     }
 
     public static void main(String[] args) {
