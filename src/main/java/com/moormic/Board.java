@@ -88,18 +88,15 @@ public class Board extends JPanel implements ActionListener {
     }
 
     private void checkApple() {
-        // if the snake has eaten the apple, grow snake and relocate apple
-        // dot size is 10 so if head is within 10 of the apple, we'll consider it eaten
-        int dx = Math.abs(apple.getCoordinate().getX() - snake.getHead().getX());
-        int dy = Math.abs(apple.getCoordinate().getY() - snake.getHead().getY());
-
-        if (dx <= DOT_SIZE && dy <= DOT_SIZE) {
+        if (apple.getCoordinate().equals(snake.getHead())) {
             snake.grow();
             score++;
             apple.move();
-
-            // todo: check if the apple has been moved onto the snake, if it has, move it again
         }
+    }
+
+    private void moveApple() {
+
     }
 
     private void checkCollision() {

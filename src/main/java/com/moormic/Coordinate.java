@@ -23,11 +23,11 @@ class Coordinate {
         return newCoord;
     }
 
-    Coordinate shiftX(int dx) {
+    private Coordinate shiftX(int dx) {
         return new Coordinate(x + dx, y);
     }
 
-    Coordinate shiftY(int dy) {
+    private Coordinate shiftY(int dy) {
         return new Coordinate(x, y + dy);
     }
 }

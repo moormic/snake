@@ -13,8 +13,8 @@ class Apple {
 
     void move() {
         coordinate = new Coordinate(
-                ThreadLocalRandom.current().nextInt(1, BOARD_LENGTH - DOT_SIZE),
-                ThreadLocalRandom.current().nextInt(1, BOARD_HEIGHT - DOT_SIZE)
+                DOT_SIZE * ThreadLocalRandom.current().nextInt(1, (BOARD_LENGTH - DOT_SIZE) / DOT_SIZE),
+                DOT_SIZE * ThreadLocalRandom.current().nextInt(1, (BOARD_HEIGHT - DOT_SIZE) / DOT_SIZE)
         );
     }
 
