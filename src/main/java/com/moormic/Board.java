@@ -80,21 +80,36 @@ public class Board extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (gameRunning) {
-            checkApple();
+            checkAppleEaten();
             checkCollision();
             snake.move(direction);
         }
         repaint();
     }
 
-    private void checkApple() {
+    private void checkAppleEaten() {
         if (apple.getCoordinate().equals(snake.getHead())) {
             snake.grow();
             score++;
-            apple.move();
+            moveApple();
 
-            // todo: check if apple is moved onto snake body
+
         }
+    }
+
+    private void moveApple() {
+        // if the apple has moved onto the snake body, move it again
+        boolean appleOnSnake = false;
+        do {
+            apple.move();
+            for (int z = 0; z < snake.getLength(); z++) {
+                if (apple.getCoordinate().equals(snake.getCoordinates()[z])) {
+                    appleOnSnake = true;
+                    break;
+                }
+            }
+            apple.move();
+        } while (appleOnSnake);
     }
 
     private void checkCollision() {
