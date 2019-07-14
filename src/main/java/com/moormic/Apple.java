@@ -4,18 +4,18 @@ import lombok.Data;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import static com.moormic.Board.*;
+
 @Data
 class Apple {
 
     private Coordinate coordinate;
 
-    Coordinate placeApple(int xMax, int yMax) {
-        // todo: call this method again if apple is placed on the snake
+    void move() {
         coordinate = new Coordinate(
-                ThreadLocalRandom.current().nextInt(1, xMax - 1),
-                ThreadLocalRandom.current().nextInt(1, yMax - 1)
+                ThreadLocalRandom.current().nextInt(1, BOARD_LENGTH - DOT_SIZE),
+                ThreadLocalRandom.current().nextInt(1, BOARD_HEIGHT - DOT_SIZE)
         );
-        return coordinate;
     }
 
     int getX() {
