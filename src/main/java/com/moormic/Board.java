@@ -50,7 +50,7 @@ public class Board extends JPanel implements ActionListener {
 
     private void startGame() {
         gameRunning = true;
-        apple.placeApple();
+        apple.move();
         timer.start();
     }
 
@@ -89,10 +89,16 @@ public class Board extends JPanel implements ActionListener {
 
     private void checkApple() {
         // if the snake has eaten the apple, grow snake and relocate apple
-        if (apple.getCoordinate().equals(snake.getHead()))
-        {
+        // dot size is 10 so if head is within 10 of the apple, we'll consider it eaten
+        int dx = Math.abs(apple.getCoordinate().getX() - snake.getHead().getX());
+        int dy = Math.abs(apple.getCoordinate().getY() - snake.getHead().getY());
+
+        if (dx <= DOT_SIZE && dy <= DOT_SIZE) {
             snake.grow();
             score++;
+            apple.move();
+
+            // todo: check if the apple has been moved onto the snake, if it has, move it again
         }
     }
 
@@ -102,15 +108,14 @@ public class Board extends JPanel implements ActionListener {
 
         // snake colliding with itself (can only do so if length > 4)
         for (int z = snake.getLength(); z > 4; z--) {
-            if (snakeHeadCoords.equals(snakeBodyCoords[z]))
-            {
+            if (snakeHeadCoords.equals(snakeBodyCoords[z])) {
                gameRunning = false;
             }
         }
 
         // snake colliding with walls
-        if (snakeHeadCoords.getX() == 0 || snakeHeadCoords.getX() == BOARD_LENGTH ||
-                snakeHeadCoords.getY() == 0 || snakeHeadCoords.getY() == BOARD_HEIGHT)
+        if (snakeHeadCoords.getX() <= 0 || snakeHeadCoords.getX() >= BOARD_LENGTH ||
+                snakeHeadCoords.getY() <= 0 || snakeHeadCoords.getY() >= BOARD_HEIGHT)
         {
             gameRunning = false;
         }
@@ -127,7 +132,8 @@ public class Board extends JPanel implements ActionListener {
 
         g.setColor(Color.white);
         g.setFont(small);
-        g.drawString(msg, (BOARD_LENGTH - metr.stringWidth(msg)) / 2, BOARD_HEIGHT / 2);
+        g.drawString(msg, (BOARD_LENGTH - metr.stringWidth(msg)) / 2, (BOARD_HEIGHT - 25) / 2);
+        g.drawString(String.format("Score: %d", score), (BOARD_LENGTH - metr.stringWidth(msg)) / 2, (BOARD_HEIGHT + 25) / 2);
     }
 
     private class RightAngleKeyAdapter extends KeyAdapter {

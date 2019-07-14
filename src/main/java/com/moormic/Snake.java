@@ -1,7 +1,6 @@
 package com.moormic;
 
 import lombok.Getter;
-import lombok.Setter;
 
 import static com.moormic.Board.*;
 
@@ -29,7 +28,8 @@ class Snake {
         for (int z = length - 1; z > 0; z--) {
             coordinates[z] = coordinates[z-1];
         }
-        getHead().move(direction);
+        Coordinate head = getHead();
+        coordinates[0] = head.shift(direction);
     }
 
     Coordinate getHead() {
