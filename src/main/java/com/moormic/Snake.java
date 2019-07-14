@@ -11,9 +11,6 @@ class Snake {
     private Coordinate[] coordinates;
     @Getter
     private int length;
-    @Getter
-    @Setter
-    private Direction direction = Direction.RIGHT;
 
     Snake(int length) {
         coordinates = new Coordinate[BOARD_AREA];
@@ -23,16 +20,16 @@ class Snake {
         final int xStart = BOARD_LENGTH / 2;
         final int yStart = BOARD_HEIGHT / 2;
         for (int z = 0; z < length; z++) {
-            coordinates[z] = new Coordinate(xStart - z, yStart - z);
+            coordinates[z] = new Coordinate(xStart - (z * DOT_SIZE), yStart);
         }
     }
 
-    void move() {
+    void move(Direction direction) {
         // each coordinate replaces the one further forward
         for (int z = length - 1; z > 0; z--) {
             coordinates[z] = coordinates[z-1];
         }
-        coordinates[0].move(direction);
+        getHead().move(direction);
     }
 
     Coordinate getHead() {

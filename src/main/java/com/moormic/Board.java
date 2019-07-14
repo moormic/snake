@@ -12,9 +12,10 @@ import static java.awt.event.KeyEvent.*;
 public class Board extends JPanel implements ActionListener {
 
     private static final int DELAY = 140;       // speed of the game
-    static final int BOARD_HEIGHT = 30;
-    static final int BOARD_LENGTH = 30;
-    static final int BOARD_AREA = BOARD_HEIGHT * BOARD_LENGTH;    // max number of dots on board (BOARD_HEIGHT * BOARD_LENGTH)
+    static final int BOARD_HEIGHT = 300;
+    static final int BOARD_LENGTH = 300;
+    static final int DOT_SIZE = 10;
+    static final int BOARD_AREA = (BOARD_HEIGHT * BOARD_LENGTH) / (DOT_SIZE * DOT_SIZE);    // max number of dots on board (BOARD_HEIGHT * BOARD_LENGTH)
 
     private int score = 0;
     private Snake snake;
@@ -31,9 +32,9 @@ public class Board extends JPanel implements ActionListener {
         snake = new Snake(3);
         apple = new Apple();
         timer = new Timer(DELAY, this);
-        snakeHeadImage = new ImageIcon("src/resources/snakeHeadImage.png").getImage();
-        snakeBodyImage = new ImageIcon("src/resources/dot.png").getImage();
-        appleImage = new ImageIcon("src/resources/apple.png").getImage();
+        snakeHeadImage = new ImageIcon("src/main/resources/head.png").getImage();
+        snakeBodyImage = new ImageIcon("src/main/resources/dot.png").getImage();
+        appleImage = new ImageIcon("src/main/resources/apple.png").getImage();
 
         initBoard();
         startGame();
@@ -49,7 +50,7 @@ public class Board extends JPanel implements ActionListener {
 
     private void startGame() {
         gameRunning = true;
-        apple.placeApple(BOARD_LENGTH, BOARD_HEIGHT);
+        apple.placeApple();
         timer.start();
     }
 
@@ -81,15 +82,14 @@ public class Board extends JPanel implements ActionListener {
         if (gameRunning) {
             checkApple();
             checkCollision();
-            snake.move();
+            snake.move(direction);
         }
         repaint();
     }
 
     private void checkApple() {
         // if the snake has eaten the apple, grow snake and relocate apple
-        if (apple.getCoordinate().getX() == snake.getCoordinates()[0].getX() &&
-                apple.getCoordinate().getY() == snake.getCoordinates()[0].getY())
+        if (apple.getCoordinate().equals(snake.getHead()))
         {
             snake.grow();
             score++;
@@ -102,8 +102,7 @@ public class Board extends JPanel implements ActionListener {
 
         // snake colliding with itself (can only do so if length > 4)
         for (int z = snake.getLength(); z > 4; z--) {
-            if (snakeHeadCoords.getX() == snakeBodyCoords[z].getX() &&
-                    snakeHeadCoords.getY() == snakeBodyCoords[z].getY())
+            if (snakeHeadCoords.equals(snakeBodyCoords[z]))
             {
                gameRunning = false;
             }
