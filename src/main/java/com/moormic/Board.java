@@ -92,8 +92,6 @@ public class Board extends JPanel implements ActionListener {
             snake.grow();
             score++;
             moveApple();
-
-
         }
     }
 
