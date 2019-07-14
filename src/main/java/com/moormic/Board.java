@@ -29,7 +29,7 @@ public class Board extends JPanel implements ActionListener {
     private volatile boolean gameRunning = false;
 
     Board() {
-        snake = new Snake(3);
+        snake = new Snake(5);
         apple = new Apple();
         timer = new Timer(DELAY, this);
         snakeHeadImage = new ImageIcon("src/main/resources/head.png").getImage();
@@ -92,11 +92,9 @@ public class Board extends JPanel implements ActionListener {
             snake.grow();
             score++;
             apple.move();
+
+            // todo: check if apple is moved onto snake body
         }
-    }
-
-    private void moveApple() {
-
     }
 
     private void checkCollision() {
