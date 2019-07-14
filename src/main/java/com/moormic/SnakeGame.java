@@ -1,11 +1,30 @@
 package com.moormic;
 
-public class SnakeGame {
-    public String getGreeting() {
-        return "Hello from Snake Game!";
+import javax.swing.*;
+import java.awt.*;
+
+public class SnakeGame extends JFrame {
+
+    private SnakeGame() {
+        initUI();
+    }
+
+    private void initUI() {
+        add(new Board());
+
+        setResizable(false);
+        pack();
+
+        setTitle("Snake");
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public static void main(String[] args) {
-        System.out.println(new SnakeGame().getGreeting());
+        EventQueue.invokeLater(() -> {
+            JFrame game = new SnakeGame();
+            game.setVisible(true);
+        });
     }
+
 }
